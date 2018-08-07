@@ -1,0 +1,33 @@
+//using exceljs
+
+ public readFile() {
+        var workbook = new Excel.Workbook();
+        // workbook.xlsx.readFile("D:\IFF\POC\ExcelReadWrite\excelFile\pocExcel.xlsx")
+        workbook.xlsx.readFile("D:\\IFF\\POC\\ExcelReadWrite\\excelFile\\pocExcel.xlsx")
+        .then(function () {
+                var worksheet = workbook.getWorksheet;
+                var worksheett = workbook.getWorksheet(worksheet.length);
+                var row = worksheett.addRow({"name":'someone'});
+                row.commit();
+                workbook.xlsx.writeFile("D:\\IFF\\POC\\ExcelReadWrite\\excelFile")
+                    .then( (data) => {
+                        console.log(data)
+                    });
+                console.log(`rowwwwwwwwww ${row}`);
+                return row;               
+            });
+    }
+
+//excel-parser
+
+public readFile() {
+        excelParser.worksheets({
+            inFile: 'D:\IFF\POC\ExcelReadWrite\excelFile\pocExcel.xlsx'
+        }, (err: any, worksheets: any) => {
+            if(err) {
+                console.error("error --",err)
+            } else {
+                console.log('worksheets --',worksheets)
+            };
+          })
+}
