@@ -31,3 +31,35 @@ public readFile() {
             };
           })
 }
+
+
+
+app.post('/test', (req: any, res: any) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err: any, fields: any, files: any) {
+      console.log(files)
+      console.log(fields)
+      res.write('File uploaded');
+      res.end();
+    });
+});
+
+https://dev.to/briandgls/using-typescript-with-express--e0k
+
+
+
+// mongo connect
+
+var MongoClient = require('mongodb').MongoClient;
+
+MongoClient.connect('mongodb://localhost:27017/iffPoc', { useNewUrlParser: true }, function(err: any, db: any){
+  if(err){ 
+    console.log("Connection failed");
+  }else{
+    console.log("Connection success");
+  }
+});
+
+
+connect mongo tutorial
+https://medium.com/@dineshuthakota/how-to-save-file-in-mongodb-using-node-js-1a9d09b019c1

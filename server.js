@@ -6,7 +6,8 @@ var routeHandler_1 = require("./controllers/routeHandler");
 var app = express();
 var port = 8080;
 app.use(bodyParser.json());
-app.get('/readFile', routeHandler_1.routeHandler);
+app.get('/uploadTemplate', routeHandler_1.routeHandler);
+app.get('/updateForm', routeHandler_1.routeHandler);
 app.listen(port, function () {
     console.log("port listening in : " + port);
 });
