@@ -1,0 +1,56 @@
+import { Router, Request, Response } from 'express';
+import * as mongodb from 'mongodb';
+import * as path from 'path';
+import * as fs from 'fs';
+var Busboy = require('busboy');
+
+import { db } from '../dbConfig';
+
+const router: Router = Router();
+
+router.post('/updateForm', (req: any, res: Response) => {
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+        file.on('data', function(data) {
+            console.log(data)
+            let insert_data: any = {};
+            insert_data.file_data = data;
+            let collection = db.collection('template'); 
+    
+            collection.insert(insert_data, (err: Error, result: any) => {
+                if(err) { console.log('Upload Failed'); }
+                else { console.log('Upload Success'); }
+            });  
+          });  
+    });
+    busboy.on('finish', function() {
+        console.log('Done parsing form!');
+        res.writeHead(303, { Connection: 'close', Location: '/' });
+        res.end();
+    });
+    req.pipe(busboy);
+});
+
+export const routeHandler: Router = router;
+
+
+
+// done in lap
+/*  router.get('/updateForm', (req: Request, res: Response) => {
+    var rstream = fs.createReadStream("C:\\Users\\Aravinth sankar\\Desktop\\IFF\\POC\\excelReadWrite\\updatedForm.xlsx");
+    res.writeHead(200, {'Content-Type': 'application/vnd.ms-excel'});
+    rstream.pipe(res);
+});  */
+
+/* router.get('/updateForm', (req: Request, res: Response) => {
+    var filename = "C:\\Users\\Aravinth sankar\\Desktop\\IFF\\POC\\excelReadWrite\\updatedForm.xlsx";
+    fs.readFile(filename, function(err, data) {
+        if (err) {
+          res.writeHead(404, {'Content-Type': 'text/html'});
+          return res.end("404 Not Found");
+        }  
+        res.writeHead(200, {'Content-Type': 'application/vnd.ms-excel'});
+        res.write(data);
+        res.end();
+      });
+}) */
